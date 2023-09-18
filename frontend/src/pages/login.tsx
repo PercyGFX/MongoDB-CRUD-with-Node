@@ -20,7 +20,7 @@ const Login: React.FC= ()=> {
   return (
   
     <div className="flex justify-centerflex justify-center items-center h-screen">
-          <Card className="w-3/12 border border-1 shadow-md mx-auto rounded-md py-5">
+          <Card className="w-3/12 border border-1 shadow-md mx-auto rounded-md py-5 text-center">
    
         <p className="font-medium text-3xl font-poppins text-gray-800">Login</p>
     <div className="flex justify-center">
@@ -28,7 +28,7 @@ const Login: React.FC= ()=> {
     name="basic"
     labelCol={{ span: 7 }}
     wrapperCol={{ span: 17 }}
-    initialValues={{ remember: true }}
+    initialValues={{ remember: false }}
     onFinish={onFinish}
     onFinishFailed={onFinishFailed}
     autoComplete="off"
