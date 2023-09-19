@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
-async function ConnectToMongoDB(connectionstring: string) {
+async function ConnectToMongoDB(connectionstring: string | undefined) {
   try {
+    if (!connectionstring) {
+      throw new Error("MongoDB connection string is not defined.");
+    }
+
     await mongoose.connect(connectionstring);
-    console.log("Connected succesfully");
+    console.log("Connected successfully");
   } catch (e) {
-    console.log("Check the mongo connection: ", e);
+    console.error("Error connecting to MongoDB:", e);
   }
 }
 
