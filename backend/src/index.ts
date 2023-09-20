@@ -3,7 +3,17 @@ const app = express();
 import routes from "./routes/routes.js";
 import { ConnectToMongoDB } from "./services/db.js";
 import * as dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
+
+// Configure CORS to allow requests from your frontend
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Replace with your frontend's URL
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Enable credentials (if needed)
+  })
+);
 
 // db connection
 ConnectToMongoDB(process.env.MONGO_CONNECTION);

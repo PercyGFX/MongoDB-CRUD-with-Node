@@ -23,9 +23,6 @@ const Login: React.FC = () => {
         <div className="flex justify-center">
           <Form
             name="basic"
-            labelCol={{ span: 7 }}
-            wrapperCol={{ span: 17 }}
-            initialValues={{ remember: false }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -50,7 +47,7 @@ const Login: React.FC = () => {
               <Input.Password />
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 5, span: 16 }}>
+            <Form.Item>
               <Button type="primary" htmlType="submit">
                 Login
               </Button>
