@@ -1,66 +1,131 @@
 import React from "react";
-import { Button, Image, Pagination, Divider, Typography } from "antd";
+import {
+  Button,
+  Image,
+  Pagination,
+  Rate,
+  Divider,
+  Typography,
+  message,
+} from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Paragraph, Text } = Typography;
 
 type Props = {};
 
+interface Book {
+  _id: string;
+  author: string;
+  bookname: string;
+  description: string;
+  image: string;
+  rating: number;
+}
+
 const Posts = (props: Props) => {
   const [current, setCurrent] = React.useState(3);
+  const [data, setData] = React.useState<Book[]>([]);
+
+  //get all books from api
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:5000/getbooks")
+      .then((response) => {
+        setData(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // delete handler
+
+  const HandleDelete = (id: string) => {
+    console.log(id);
+
+    axios
+      .get("http://localhost:5000/deletebook/" + id)
+      .then((response) => {
+        console.log(response);
+        message.success("Book deleted");
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error("Deletion failed");
+      });
+  };
 
   const onChange: any["onChange"] = (page: any) => {
     console.log(page);
     setCurrent(page);
   };
+
   return (
     <div className="flex justify-center w-full">
       <div className="w-7/12">
-        <div className="bg-white my-4 shadow-md px-5 pt-3 font-poppins rounded-lg flex justify-between">
-          <div className="w-8/12">
-            <div className="font-poppins font-semibold text-lg">
-              A Time to Kill
-            </div>
-            <div className="font-normal text-sm">by John Grisham</div>
-            <Divider />
+        {data.length > 0 ? (
+          data.map((book) => {
+            return (
+              <div
+                key={book._id.toString()}
+                className="bg-white my-4 shadow-md px-5 pt-3 font-poppins rounded-lg flex justify-between"
+              >
+                <div className="w-8/12">
+                  <div className="font-poppins font-semibold text-lg">
+                    {book.bookname}
+                  </div>
+                  <div className="font-normal text-sm">{book.author}</div>
+                  <Rate disabled defaultValue={book.rating} className="mt-3" />
+                  <Divider className="my-2" />
 
-            <Paragraph
-              className=" font-poppins text-base"
-              ellipsis={{ rows: 4, expandable: false, symbol: "more" }}
-            >
-              This quotation for Faulkner’s 1936 novel comes from the Books of
-              Samuel – more specifically, 19:4 in 2 Samuel, which is in the Old
-              Testament and relates some of the history of Israel. Absalom, the
-              third son of David, rebelled against his father and was killed.
-            </Paragraph>
-          </div>
-          <div className="flex-1 flex justify-end">
-            <div>
-              <Image
-                width={200}
-                className="rounded-md"
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-              />
-              <div className="flex justify-end mx-2 py-2">
-                <Button className="mx-2" type="primary" icon={<EditOutlined />}>
-                  Edit
-                </Button>
+                  <Paragraph
+                    className=" font-poppins text-base"
+                    ellipsis={{ rows: 4, expandable: false, symbol: "more" }}
+                  >
+                    {book.description}
+                  </Paragraph>
+                </div>
+                <div className="flex-1 flex justify-end">
+                  <div>
+                    <Image
+                      width={200}
+                      className="rounded-md"
+                      src={book.image}
+                    />
+                    <div className="flex justify-end mx-2 py-2">
+                      <Button
+                        className="mx-2"
+                        type="primary"
+                        icon={<EditOutlined />}
+                      >
+                        Edit
+                      </Button>
 
-                <Button
-                  className=""
-                  type="primary"
-                  danger
-                  icon={<DeleteOutlined />}
-                >
-                  Delete
-                </Button>
+                      <span onClick={() => HandleDelete(book._id)}>
+                        <Button
+                          className=""
+                          type="primary"
+                          danger
+                          icon={<DeleteOutlined />}
+                        >
+                          Delete
+                        </Button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            );
+          })
+        ) : (
+          <div className="bg-white my-4 shadow-md p-4 text-center font-poppins rounded-lg">
+            No Posts found
           </div>
-        </div>
-        <div className="bg-white my-4 shadow-md p-4 text-center font-poppins rounded-lg">
-          No Posts found
-        </div>
+        )}
+
         {/* <Pagination defaultCurrent={1} total={50} /> */}
       </div>
     </div>

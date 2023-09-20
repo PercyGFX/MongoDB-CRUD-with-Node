@@ -1,8 +1,9 @@
 import React from "react";
 import { storage, firebase } from "../services/firebase";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, message, Form, Input, Upload } from "antd";
+import { Button, message, Form, Input, Upload, Rate } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -17,18 +18,28 @@ type Props = {};
 
 function AddBook({}: Props) {
   const [imageUrl, setImageUrl] = React.useState("");
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
   // upload firebase
 
   const customUploadValidator = async (file: File) => {
-    // Check file type (optional)
-
     console.log("File name:", file.name);
     console.log("File type:", file.type);
     console.log("File size (in bytes):", file.size);
 
+    const maxSize = 5 * 1024 * 1024; // 5 MB (adjust as needed)
+
+    if (file.size > maxSize) {
+      message.error("File size exceeds the allowed limit (5 MB)");
+      form.resetFields(["bookImage"]); // Reset the upload element
+      return false; // Prevent the file from being uploaded
+    }
+
+    // check type
     const allowedTypes = ["image/jpeg", "image/png"];
     if (!allowedTypes.includes(file.type)) {
       message.error("You can only upload JPG and PNG files!");
+      form.resetFields(["bookImage"]);
       return false;
     }
 
@@ -50,6 +61,8 @@ function AddBook({}: Props) {
     } catch (error) {
       console.error("Error uploading image:", error);
       message.error("Error uploading image");
+      form.resetFields(["bookImage"]);
+
       return false; // Prevent automatic file upload by returning false
     }
   };
@@ -61,7 +74,7 @@ function AddBook({}: Props) {
       bookname: values.bookname,
       author: values.author,
       description: values.description,
-      rating: 5,
+      rating: values.rating,
       image: imageUrl,
     };
 
@@ -72,17 +85,19 @@ function AddBook({}: Props) {
       .then((response) => {
         console.log("POST request success:", response.data);
         message.success("Book posted");
+        navigate("/");
       })
       .catch((error) => {
         console.error("POST request error:", error);
-        message.error("failed");
+        message.error("Some field is missing or database not working");
       });
   };
 
   return (
     <div className="flex justify-center w-full">
-      <div className="bg-white my-4 shadow-md px-5 pt-8 font-poppins rounded-lg flex justify-between w-7/12 ">
+      <div className="bg-white my-4 shadow-md px-5 pt-1 font-poppins rounded-lg flex justify-between w-7/12 ">
         <Form
+          form={form}
           className="w-full"
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 15 }}
@@ -90,6 +105,9 @@ function AddBook({}: Props) {
           style={{ maxWidth: 600 }}
           onFinish={handlesubmit}
         >
+          <p className="font-poppins font-semibold text-xl text-center">
+            Add New Book
+          </p>
           <Form.Item
             label="Book Title"
             name="bookname"
@@ -112,6 +130,14 @@ function AddBook({}: Props) {
             rules={[{ required: true, message: "Please enter a description" }]}
           >
             <TextArea rows={4} />
+          </Form.Item>
+
+          <Form.Item
+            label="Rating"
+            name="rating"
+            rules={[{ required: true, message: "Please choose a rating" }]}
+          >
+            <Rate />
           </Form.Item>
 
           <Form.Item

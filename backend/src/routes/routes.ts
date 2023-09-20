@@ -17,7 +17,7 @@ router.post("/addbook", (req, res) => {
   console.log(req.body);
   BookModel.create(req.body)
     .then((book) => res.json(book))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(401).json(err));
 });
 
 // get single book
@@ -29,7 +29,9 @@ router.get("/getbooks/:id", (req, res) => {
     .then((book) => {
       res.json(book);
     })
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      console.log("Some field is missing. Please refresh and try again")
+    );
 });
 
 //update books
