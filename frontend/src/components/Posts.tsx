@@ -150,10 +150,13 @@ const Posts = (props: Props) => {
                 </div>
               );
             })
+          ) : loading ? (
+            <div className="bg-white my-4 shadow-md p-4 text-center font-poppins rounded-lg">
+              <Skeleton loading={loading} active></Skeleton>
+            </div>
           ) : (
             <div className="bg-white my-4 shadow-md p-4 text-center font-poppins rounded-lg">
               No Posts found
-              <Skeleton loading={loading} active></Skeleton>
             </div>
           )}
 
