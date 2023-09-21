@@ -8,8 +8,7 @@
     "build": "tsc",
     "start:ts": "tsc -w",
     "start:js": "nodemon dist/index.js",
-    "start": "concurrently npm:start:*",
-    "vercel-build": "test"
+    "start": "concurrently npm:start:*"
   },
   "keywords": [],
   "author": "",
