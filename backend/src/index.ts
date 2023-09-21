@@ -33,3 +33,5 @@ const port = process.env.PORT || 5000; // Default to port 3000 if PORT environme
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+export default app;
