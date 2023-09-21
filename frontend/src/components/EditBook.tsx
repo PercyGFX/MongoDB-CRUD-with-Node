@@ -118,7 +118,7 @@ function EditBook({}: Props) {
     };
     //axios post
     axios
-      .post("http://localhost:5000/updatebook/" + id, postData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/updatebook/${id}`, postData)
       .then((response) => {
         console.log("POST request success:", response.data);
         message.success("Book updated");

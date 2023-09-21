@@ -81,7 +81,7 @@ function AddBook({}: Props) {
     // axios post
 
     axios
-      .post("http://localhost:5000/addbook", postData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/addbook`, postData)
       .then((response) => {
         console.log("POST request success:", response.data);
         message.success("Book posted");

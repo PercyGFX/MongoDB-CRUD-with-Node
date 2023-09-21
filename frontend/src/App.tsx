@@ -25,7 +25,7 @@ const App: React.FC = () => {
 
         {/* main routes add edit delete and view */}
         <Header />
-        {!(matchNewBook || matchEditBook) && <Search />}
+
         {/* Rest of your component */}
         <Routes>
           <Route path="/" element={<Posts />} />

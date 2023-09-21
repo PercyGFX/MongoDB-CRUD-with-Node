@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "build": "tsc",
     "start:ts": "tsc -w",
     "start:js": "nodemon dist/index.js",
-    "start": "concurrently npm:start:*"
+    "start dev": "concurrently npm:start:*",
+    "start": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
