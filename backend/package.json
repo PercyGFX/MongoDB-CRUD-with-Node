@@ -11,8 +11,7 @@
     "build": "tsc",
     "start:ts": "tsc -w",
     "start:js": "nodemon dist/index.js",
-    "start dev": "concurrently npm:start:*",
-    "start": "node ./dist/index.js"
+    "start": "concurrently npm:start:*"
   },
   "keywords": [],
   "author": "",
