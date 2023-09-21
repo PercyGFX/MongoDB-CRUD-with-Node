@@ -7,6 +7,7 @@ import {
   Divider,
   Typography,
   message,
+  Skeleton,
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -28,6 +29,7 @@ interface Book {
 const Posts = (props: Props) => {
   const [current, setCurrent] = React.useState(3);
   const [data, setData] = React.useState<Book[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   //get all books from api
   React.useEffect(() => {
@@ -36,6 +38,7 @@ const Posts = (props: Props) => {
       .then((response) => {
         setData(response.data);
         console.log(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -150,6 +153,7 @@ const Posts = (props: Props) => {
           ) : (
             <div className="bg-white my-4 shadow-md p-4 text-center font-poppins rounded-lg">
               No Posts found
+              <Skeleton loading={loading} active></Skeleton>
             </div>
           )}
 
