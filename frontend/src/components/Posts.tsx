@@ -10,6 +10,7 @@ import {
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const { Paragraph, Text } = Typography;
 
@@ -51,6 +52,12 @@ const Posts = (props: Props) => {
       .then((response) => {
         console.log(response);
         message.success("Book deleted");
+        // filter posts again
+        setData((olddata) => {
+          return olddata.filter((data) => {
+            return data._id !== id;
+          });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -96,13 +103,15 @@ const Posts = (props: Props) => {
                       src={book.image}
                     />
                     <div className="flex justify-end mx-2 py-2">
-                      <Button
-                        className="mx-2"
-                        type="primary"
-                        icon={<EditOutlined />}
-                      >
-                        Edit
-                      </Button>
+                      <Link to={"/editbook/" + book._id}>
+                        <Button
+                          className="mx-2"
+                          type="primary"
+                          icon={<EditOutlined />}
+                        >
+                          Edit
+                        </Button>
+                      </Link>
 
                       <span onClick={() => HandleDelete(book._id)}>
                         <Button

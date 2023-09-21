@@ -6,11 +6,14 @@ import Search from "./components/Search";
 import Posts from "./components/Posts";
 import Footer from "./components/Footer";
 import AddBook from "./components/AddBook";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import EditBook from "./components/EditBook";
+import { Routes, Route, useMatch } from "react-router-dom";
 
 const App: React.FC = () => {
-  const navigate = useNavigate();
   const currentPath = window.location.pathname;
+
+  const matchNewBook = useMatch("/newbook");
+  const matchEditBook = useMatch("/editbook/:id");
 
   return (
     <div className="flex justify-center">
@@ -22,10 +25,12 @@ const App: React.FC = () => {
 
         {/* main routes add edit delete and view */}
         <Header />
-        {currentPath !== "/newbook" && <Search />}
+        {!(matchNewBook || matchEditBook) && <Search />}
+        {/* Rest of your component */}
         <Routes>
           <Route path="/" element={<Posts />} />
           <Route path="/newbook" element={<AddBook />} />
+          <Route path="/editbook/:id" element={<EditBook />} />
         </Routes>
         <Footer />
       </div>

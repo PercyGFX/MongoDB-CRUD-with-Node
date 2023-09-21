@@ -36,7 +36,7 @@ router.get("/getbooks/:id", (req, res) => {
 
 //update books
 
-router.put("/updatebook/:id", (req, res) => {
+router.post("/updatebook/:id", (req, res) => {
   const id: string = req.params.id;
 
   BookModel.findByIdAndUpdate(
