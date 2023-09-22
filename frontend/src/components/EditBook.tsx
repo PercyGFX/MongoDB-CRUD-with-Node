@@ -35,7 +35,7 @@ function EditBook({}: Props) {
   // use effect to get single book details and store on data use state
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/getbooks/${id}`)
+      .get(`${process.env}:5000/getbooks/${id}`)
       .then((response) => {
         setData(response.data);
         // Set form fields values after data is fetched
