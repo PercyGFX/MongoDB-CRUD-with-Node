@@ -1,8 +1,29 @@
 import React from "react";
 import { Button, Card, Form, Input } from "antd";
+import axios from "axios";
 
 const onFinish = (values: any) => {
   console.log("Success:", values);
+
+  //console.log(values.username, values.password);
+
+  axios
+    .post(
+      `${process.env.REACT_APP_BACKEND_URL}/login`,
+      {
+        username: values.username,
+        password: values.password,
+      },
+      {
+        withCredentials: true, // Include credentials (cookies)
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const onFinishFailed = (errorInfo: any) => {
