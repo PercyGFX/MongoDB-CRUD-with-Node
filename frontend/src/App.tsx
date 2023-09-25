@@ -21,22 +21,25 @@ const App: React.FC = () => {
         {/* login route */}
         <Routes>
           <Route path="/login" element={<Login />} />
-        </Routes>
 
-        {/* main routes add edit delete and view */}
-        <Header />
+          {/* Render Header and Footer for routes other than /login */}
+          <Route
+            element={
+              <>
+                <Header />
 
-        {/* Rest of your component */}
-        <Routes>
-          <Route path="/" element={<Posts />} />
-          <Route path="/newbook" element={<AddBook />} />
-          <Route path="/editbook/:id" element={<EditBook />} />
-          {/* // protected */}
-          <Route element={<Auth />}>
+                {/* outlet componenet in the middle with auth */}
+                <Auth />
+                <Footer />
+              </>
+            }
+          >
+            <Route path="/" element={<Posts />} />
+            <Route path="/newbook" element={<AddBook />} />
+            <Route path="/editbook/:id" element={<EditBook />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
-        <Footer />
       </div>
     </div>
   );

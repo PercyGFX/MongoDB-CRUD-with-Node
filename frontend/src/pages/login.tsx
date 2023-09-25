@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, message } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -34,10 +34,12 @@ const Login: React.FC = () => {
       )
       .then((response) => {
         console.log(response.data);
-        navigate("/profile");
+        message.success("Login Success");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
+        message.error("Username or Password is wrong");
       });
   };
 

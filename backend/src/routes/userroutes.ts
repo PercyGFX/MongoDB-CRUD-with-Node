@@ -5,6 +5,18 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import loginmiddleware from "../middleware/auth.js";
 
+//logout
+
+router.get("/logout", (req, res) => {
+  if (req.isAuthenticated()) {
+    req.logOut;
+    res.status(200).json({
+      success: true,
+      message: "Logged out",
+    });
+  }
+});
+
 // session check
 
 router.get("/isLogged", (req, res) => {
