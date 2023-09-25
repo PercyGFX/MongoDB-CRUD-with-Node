@@ -9,9 +9,12 @@ export default function Auth({}: Props) {
 
   React.useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/isLogged`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/isLogged`, {
+        withCredentials: true,
+      })
       .then((response) => {
-        if (response.data.success == true) {
+        console.log(response.data);
+        if (response.data.success === true) {
         } else {
           navigate("/login");
         }
