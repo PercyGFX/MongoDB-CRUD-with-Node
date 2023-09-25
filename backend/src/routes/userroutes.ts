@@ -5,6 +5,23 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import loginmiddleware from "../middleware/auth.js";
 
+// session check
+
+router.get("/isLogged", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({
+      success: true,
+      user: req.user.username,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "user not logged",
+    });
+  }
+});
+
+// login passport
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err: any, user: any, info: any) => {
     if (err) throw err;

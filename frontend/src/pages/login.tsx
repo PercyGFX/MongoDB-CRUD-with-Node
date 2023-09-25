@@ -1,30 +1,7 @@
 import React from "react";
 import { Button, Card, Form, Input } from "antd";
 import axios from "axios";
-
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-
-  //console.log(values.username, values.password);
-
-  axios
-    .post(
-      `${process.env.REACT_APP_BACKEND_URL}/login`,
-      {
-        username: values.username,
-        password: values.password,
-      },
-      {
-        withCredentials: true, // Include credentials (cookies)
-      }
-    )
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+import { useNavigate } from "react-router-dom";
 
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
@@ -37,6 +14,33 @@ type FieldType = {
 };
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+
+    //console.log(values.username, values.password);
+
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/login`,
+        {
+          username: values.username,
+          password: values.password,
+        },
+        {
+          withCredentials: true, // Include credentials (cookies)
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        navigate("/profile");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="flex justify-centerflex justify-center items-center h-screen">
       <Card className="w-3/12 border border-1 shadow-md mx-auto rounded-md py-5 text-center">
