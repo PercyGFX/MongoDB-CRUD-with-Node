@@ -11,7 +11,7 @@ export default function Auth({}: Props) {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/isLogged`)
       .then((response) => {
-        if (response.data.success === true) {
+        if (response.data.success == true) {
         } else {
           navigate("/login");
         }
