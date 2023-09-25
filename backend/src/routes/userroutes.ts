@@ -3,6 +3,7 @@ const router = express.Router();
 import UserModel from "../models/users.js";
 import bcrypt from "bcrypt";
 import passport from "passport";
+import loginmiddleware from "../middleware/auth.js";
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err: any, user: any, info: any) => {
@@ -69,14 +70,8 @@ router.post("/register", async (req, res) => {
 
 // profile
 
-router.get("/profile", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json(req.user);
-
-    console.log(req.user);
-  } else {
-    res.send("profile not authenticated");
-  }
+router.get("/profile", loginmiddleware, (req, res) => {
+  res.send("working");
 });
 
 export default router;
