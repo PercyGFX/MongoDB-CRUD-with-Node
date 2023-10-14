@@ -29,7 +29,7 @@ const App: React.FC = () => {
                 <Header />
 
                 {/* outlet componenet in the middle with auth */}
-                <Auth />
+                {/* <Auth /> */}
                 <Footer />
               </>
             }
