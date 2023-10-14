@@ -26,19 +26,17 @@ const App: React.FC = () => {
           <Route
             element={
               <>
-                <Header />
-
                 {/* outlet componenet in the middle with auth */}
                 {/* <Auth /> */}
-                <Footer />
               </>
             }
-          >
-            <Route path="/" element={<Posts />} />
-            <Route path="/newbook" element={<AddBook />} />
-            <Route path="/editbook/:id" element={<EditBook />} />
-            <Route path="/profile" element={<Profile />} />
-          </Route>
+          ></Route>
+          <Header />
+          <Route path="/" element={<Posts />} />
+          <Route path="/newbook" element={<AddBook />} />
+          <Route path="/editbook/:id" element={<EditBook />} />
+          <Route path="/profile" element={<Profile />} />
+          <Footer />
         </Routes>
       </div>
     </div>
