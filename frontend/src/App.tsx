@@ -19,18 +19,18 @@ const App: React.FC = () => {
     <div className="flex justify-center">
       <div className="w-9/12">
         {/* login route */}
+        <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
 
           {/* Render Header and Footer for routes other than /login */}
 
-          <Header />
           <Route path="/" element={<Posts />} />
           <Route path="/newbook" element={<AddBook />} />
           <Route path="/editbook/:id" element={<EditBook />} />
           <Route path="/profile" element={<Profile />} />
-          <Footer />
         </Routes>
+        <Footer />
       </div>
     </div>
   );
