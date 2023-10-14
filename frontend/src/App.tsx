@@ -23,14 +23,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
 
           {/* Render Header and Footer for routes other than /login */}
-          <Route
-            element={
-              <>
-                {/* outlet componenet in the middle with auth */}
-                {/* <Auth /> */}
-              </>
-            }
-          ></Route>
+
           <Header />
           <Route path="/" element={<Posts />} />
           <Route path="/newbook" element={<AddBook />} />
